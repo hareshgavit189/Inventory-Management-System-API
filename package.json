@@ -1,0 +1,24 @@
+{
+  "name": "inventory-management-system-api",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/hareshgavit189/Inventory-Management-System-API#readme",
+  "bugs": {
+    "url": "https://github.com/hareshgavit189/Inventory-Management-System-API/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/hareshgavit189/Inventory-Management-System-API.git"
+  },
+  "license": "ISC",
+  "author": "Haresh Gavit",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
