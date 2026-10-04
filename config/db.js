@@ -1,7 +1,7 @@
 //Connect MongoDB
 import mongoose from 'mongoose';
 
-// const MONGODB_URL = "mongodb://localhost:27017/inventoryDB";
+const MONGODB_URL = "mongodb://localhost:27017/inventoryDB";
 // const ProductDB = async()=>{
 //     await mongoose.connect(MONGODB_URL)
 //         .then(()=>{
@@ -14,7 +14,7 @@ import mongoose from 'mongoose';
 // export default ProductDB;
 
 
-const inventoryDB = mongoose.createConnection('mongodb://localhost:27017/inventoryDB');
+const inventoryDB = mongoose.createConnection(MONGODB_URL);
 inventoryDB.on("connected", ()=>{
     console.log("inventory DB connected.")
 });

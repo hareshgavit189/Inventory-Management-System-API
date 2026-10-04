@@ -3,7 +3,7 @@ import Product from '../models/product.js';
 export const getProducts = async(req, res)=>{
     try{
         const products = await Product.find({});
-        if(!products){
+        if(products.length === 0){
             return res.status(404).json({
                 success: false,
                 message: "products not found!"
@@ -130,5 +130,86 @@ export const deleteProduct = async(req,res)=>{
             success: false,
             message: error.message
         })
+    }
+}
+
+//Search product by Name
+export const searchProduct = async(req,res)=>{
+    try{
+        const {search} = req.query; 
+        if (!search) {
+            return res.status(400).json({
+                success: false,
+                message: "Search query is required"
+            });
+        }
+
+        const products = await Product.find({
+            name: {$regex: search , $options: "i"}
+        });
+
+        if(products.length === 0){
+            return res.status(404).json({
+                success: false,
+                message: "Product not found"
+            });
+        }
+        
+        res.status(200).json({
+            success: true,
+            message: "product found successfully",
+            product: products
+        })
+
+    }
+    catch(error){
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        })
+    }
+}
+
+
+export const filterProducts = async(req,res) =>{
+    try{
+        const {category, supplier, minPrice, maxPrice} = req.query;
+        const filter = {};
+
+        if(category){
+            filter.category = category;
+        }
+        if(supplier){
+            filter.supplier = supplier;
+        }
+        if(minPrice !== undefined || maxPrice !== undefined){
+            filter.price = {};
+            if(minPrice !== undefined){
+                filter.price.$gte = Number(minPrice);
+            }
+            if(maxPrice !== undefined){
+                filter.price.$lte = Number(maxPrice)
+            }
+        }
+
+        const products = await Product.find(filter);
+        if (products.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "No products found"
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            count: products.length,
+            products
+        });
+    }
+    catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
     }
 }
