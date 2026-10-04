@@ -1,39 +1,53 @@
 import express from 'express';
+import mongoose from 'mongoose';
 
 const app = express();
 const PORT = 3000;
 
-const products = [
-    {
-        id: 1,
-        name: "Mouse",
-        category: "Electronics",
-        price: 243,
-        quantity: 25,
-        supplier: "ABC Treader",
-        createdAt: "2026-10-04T05:28:00.000Z"
-    },
-    {
-        id: 2,
-        name: "Banana",
-        category: "Fruits",
-        price: 132,
-        quantity: 767,
-        supplier: "ABC Treader",
-        createdAt: "2026-11-04T05:28:00.000Z"
-    },
-    {
-        id: 3,
-        name: "paper",
-        category: "paer",
-        price: 111,
-        quantity: 67,
-        supplier: "paper Treader",
-        createdAt: "2026-11-04T05:28:00.000Z"
-    }
-];
+MONGODB_URL = "mongodb://localhost:27017";
 
 app.use(express.json());
+
+//Connect MongoDB
+mongoose.connect(MONGODB_URL)
+    .then(()=>{
+        console.log("MongoDB connected successfully");
+    })
+    .catch((error)=>{
+        console.error("MongoDB connection error: ", error);
+    });
+
+//Dummy data
+// const products = [
+//     {
+//         id: 1,
+//         name: "Mouse",
+//         category: "Electronics",
+//         price: 243,
+//         quantity: 25,
+//         supplier: "ABC Treader",
+//         createdAt: "2026-10-04T05:28:00.000Z"
+//     },
+//     {
+//         id: 2,
+//         name: "Banana",
+//         category: "Fruits",
+//         price: 132,
+//         quantity: 767,
+//         supplier: "ABC Treader",
+//         createdAt: "2026-11-04T05:28:00.000Z"
+//     },
+//     {
+//         id: 3,
+//         name: "paper",
+//         category: "paer",
+//         price: 111,
+//         quantity: 67,
+//         supplier: "paper Treader",
+//         createdAt: "2026-11-04T05:28:00.000Z"
+//     }
+// ];
+
 
 //GET all products
 app.get('/products', (req,res)=>{
