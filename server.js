@@ -1,5 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
+import Product from './models/product.js';
 
 const app = express();
 const PORT = 3000;
@@ -73,31 +74,37 @@ app.get('/products/:id', (req,res)=>{
 })
 
 //Create Product
-app.post('/products',(req,res)=>{
-    const {name, category, price, quantity, supplier} = req.body;
+app.post('/products', async(req,res)=>{
+    try{
+        const {name, category, price, quantity, supplier} = req.body;
 
-    if(!name || !category || price===undefined || quantity===undefined || !supplier ){
-        return res.status(400).json({
-            success: false,
-            message: "Please fill all details"
+        if(!name || !category || price===undefined || quantity===undefined || !supplier ){
+            return res.status(400).json({
+                success: false,
+                message: "Please fill all details"
+            });
+        }
+        const product = await Product.create({
+            name: name,
+            category: category,
+            price: price,
+            quantity: quantity,
+            supplier: supplier,
+            createdAt: new Date()
+        });
+
+        res.status(200).json({
+            success: true,
+            message: "Product created successfuly",
+            product
         });
     }
-    const product = {
-        id: products.length + 1,
-        name: name,
-        category: category,
-        price: price,
-        quantity: quantity,
-        supplier: supplier,
-        createdAt: new Date()
+    catch(error){
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        })
     }
-
-    products.push(product);
-    res.status(200).json({
-        success: true,
-        message: "Product created successfuly",
-        product
-    });
 });
 
 //Update product
