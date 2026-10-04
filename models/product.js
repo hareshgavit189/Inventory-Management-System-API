@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { inventoryDB } from '../config/db.js';
 
 const productSchema = new mongoose.Schema({
     name: {type: String, required: true},
@@ -9,6 +10,7 @@ const productSchema = new mongoose.Schema({
     createdAt: {type: Date, default: Date.now()}
 });
 
-const Product  = mongoose.model('products', productSchema);
+//const Product  = mongoose.model('products', productSchema);
+const Product = inventoryDB.model('products', productSchema);
 
 export default Product;
