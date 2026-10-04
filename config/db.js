@@ -1,26 +1,16 @@
-//Connect MongoDB
-import mongoose from 'mongoose';
+// config/db.js
 
-const MONGODB_URL = "mongodb://localhost:27017/inventoryDB";
-// const ProductDB = async()=>{
-//     await mongoose.connect(MONGODB_URL)
-//         .then(()=>{
-//             console.log("MongoDB connected successfully");
-//         })
-//         .catch((error)=>{
-//             console.error("MongoDB connection error: ", error);
-//         });
-// }
-// export default ProductDB;
+import mongoose from "mongoose";
+import "dotenv/config";
 
+const ProductDB = async () => {
+    try {
+        await mongoose.connect(process.env.MONGODB_URL);
+        console.log("MongoDB connected successfully");
+    } catch (error) {
+        console.error("MongoDB connection error:", error.message);
+        process.exit(1);
+    }
+};
 
-const inventoryDB = mongoose.createConnection(MONGODB_URL);
-inventoryDB.on("connected", ()=>{
-    console.log("inventory DB connected.")
-});
-
-inventoryDB.on("error", ()=>{
-    console.log("inventory DB connection failed.")
-});
-
-export {inventoryDB};
+export default ProductDB;
