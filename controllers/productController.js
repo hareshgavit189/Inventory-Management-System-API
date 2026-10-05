@@ -62,7 +62,7 @@ export const getProduct = async(req,res)=>{
         const product = await Product.findById(id);
 
         if(!product){
-            return res.status(400).json({
+            return res.status(404).json({
                 success: false,
                 message: "product not found"
             }); 
@@ -93,7 +93,7 @@ export const updateProduct = async(req,res)=>{
             }); 
         }
 
-        res.status(201).json({
+        res.status(200).json({
             success: true,
             message: "Product updated successfully",
             product: product
@@ -119,7 +119,7 @@ export const deleteProduct = async(req,res)=>{
             }); 
         }
 
-        res.status(201).json({
+        res.status(200).json({
             success: true,
             message: "Product deleted successfully",
             product: product
