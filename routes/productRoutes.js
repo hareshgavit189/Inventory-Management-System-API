@@ -1,10 +1,11 @@
 import express from 'express';
 import {getProduct, getProducts, createProduct, updateProduct, deleteProduct, searchProduct, filterProducts} from '../controllers/productController.js';
+import {authMiddleware} from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
 
-router.get('/products', getProducts);
+router.get('/products', authMiddleware ,getProducts);
 
 router.get('/products/filter', filterProducts);
 

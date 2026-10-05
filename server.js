@@ -2,7 +2,6 @@ import express from 'express';
 import inventoryDB from './config/db.js';
 
 import authRoutes from './routes/authRoutes.js';
-import {authMiddleware} from './middleware/authMiddleware.js';
 import productRoutes from './routes/productRoutes.js';
 
 const app = express();
@@ -14,7 +13,7 @@ app.use(express.json());
 app.use('/auth', authRoutes);
 
 // Product routes - protected
-app.use('/api', authMiddleware, productRoutes);
+app.use('/api', productRoutes);
 
 app.listen(PORT, async () => {
     await inventoryDB();
